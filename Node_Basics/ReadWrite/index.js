@@ -11,7 +11,7 @@ const inputText = fs.readFileSync('./inputText.txt','utf-8');
 
 //Async
 
-fs.writeFile('./writeSync.txt',inputText,(err)=>{
-  console.log(data);
+fs.writeFile('./writeSync.txt',inputText,(err,data)=>{
+  console.log("data wrriten");
 });
 console.log("Execute first");
