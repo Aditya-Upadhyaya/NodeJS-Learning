@@ -24,10 +24,24 @@ const getDogPic = async () => {
     const fileData = await readFilePro("dogData.txt");
     console.log("data from file - ", fileData.toString());
 
-    const res = await superagent.get(
+    const response1Promise = superagent.get(
       `https://dog.ceo/api/breed/${fileData.toString()}/images/random`
     );
-    await writeFilePro("daogResponse.txt", res.body.message);
+    const response2Promise = superagent.get(
+      `https://dog.ceo/api/breed/${fileData.toString()}/images/random`
+    );
+    const response3Promise = superagent.get(
+      `https://dog.ceo/api/breed/${fileData.toString()}/images/random`
+    );
+
+    const promiseAll = await Promise.all([
+      response1Promise,
+      response2Promise,
+      response3Promise,
+    ]);
+    const images = promiseAll.map((ele) => ele.body.message);
+
+    await writeFilePro("daogResponse.txt", images.join("\n"));
   } catch (error) {
     console.log("error - ", error);
     //throwing err is imp beacuse if we did not throw thne it will not catch as async will return promise
